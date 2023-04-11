@@ -21,6 +21,8 @@ def copy_split(split_json, split_name="train"):
                 os.mkdir(target_dir)
             if not os.path.exists(target_path):
                 split_classes.append(t["clean_text"])
+                #added print for check
+                print(t["clean_text"])
                 shutil.copy(file_path, target_path)
                 print("Copied")
         else:

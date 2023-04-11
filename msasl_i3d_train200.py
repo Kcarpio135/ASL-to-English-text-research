@@ -8,8 +8,8 @@ import time
 import json
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
-train_glob_pattern = '/home/ubuntu/data/videos/crop/train/{classname}/*.mp4'
-val_glob_pattern = '/home/ubuntu/data/videos/crop/val/{classname}/*.mp4'
+train_glob_pattern = '/data/videos/crop/train/{classname}/*.mp4'
+val_glob_pattern = '/data/videos/crop/val/{classname}/*.mp4'
 
 
 # def check_i3d():
@@ -33,7 +33,7 @@ def model_checkpoints():
 
 def run_i3d_pretrained():
     EPOCHS = 50
-    with open("/home/ubuntu/data/MSASL_classes.json") as f:
+    with open("data/msasl/MSASL_classes.json") as f:
         classes = json.load(f)
 
     classes = ['match', 'fail', 'laugh', 'book', 'sign language', 'school', 'easter', 'boring', 'past', 'phone', 'library', 'germany',

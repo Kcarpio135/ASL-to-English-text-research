@@ -10,6 +10,7 @@ VIDEOS_PATH = 'data/videos'
 JSON_PATH = 'data/msasl'
 
 
+
 def sanitize_file_name(filename):
     return re.sub('[^\w\-_\. ]', '_', filename)
 
@@ -48,7 +49,6 @@ def crop_video_file(bbox, clean_text, split_name, url):
 
 
 def crop_dataset():
-    # print(JSON_PATH + "/MSASL_train.json")
     with open(JSON_PATH + "/MSASL_train.json") as f:
         train_json = json.load(f)
     with open(JSON_PATH + "/MSASL_test.json") as f:

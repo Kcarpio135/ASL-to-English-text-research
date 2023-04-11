@@ -13,7 +13,7 @@ role = get_execution_role()
 bucket='cs230projectdata'
 data_key = 'TrimmedVideos'
 VIDEOS_PATH = 's3://{}/{}'.format(bucket, data_key)
-JSON_PATH = '/Volumes/Extreme SSD/CMSI_Thesis/ASL-to-English-text-research/data/msasl'
+JSON_PATH = '/Volumes/Extreme SSD/CMSI_Thesis/Real-time-ASL-to-English-text-translation/data/msasl'
 
 def copy_split(split_json, split_name="train"):
     split_classes = []

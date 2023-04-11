@@ -2,6 +2,7 @@ import json
 import urllib.request
 #import youtube_dl
 import os
+#pip install youtube-dl and the upgragde 
 
 JSON_PATH = '/Real-time-ASL-to-English-text-translation/data/msasl/MSASL_val.json'
 Video_path = '/data/videos'

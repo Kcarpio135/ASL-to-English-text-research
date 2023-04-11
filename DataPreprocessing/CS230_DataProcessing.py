@@ -1,5 +1,4 @@
 import sys 
-
 # import cv2
 import os
 import pickle
@@ -44,16 +43,17 @@ def TrimVideoClip(data_dir):
 
     files = [f for f in listdir(home_directory) if isfile(join(home_directory, f))]
     print(files)
-    print('enter')
 
     for file_name in files:
-        print("exit")
+
+        print('enter')
         fileName = (file_name[:-4])
         VideoNameDF = MSASL_Data.loc[MSASL_Data['VideoName'] == fileName] #Filter for the file name in the df
         if VideoNameDF.empty:
             continue
         start_time = VideoNameDF['start_time'].min() # read the corresponding start and end time for the video from the df; min(), max() are just a proxy; we expect start and end time to be same for a given video name in case multiple enteries are present for the video
         end_time = VideoNameDF['end_time'].max()
+        #Print the name, start time and end of the file
         print(fileName,start_time, end_time)
         videoInput_path = video_dir + file_name
         TrimmedVideo_TargetPath = video_dir + "/TrimmedVideos/"
@@ -62,6 +62,7 @@ def TrimVideoClip(data_dir):
                 os.mkdir(TrimmedVideo_TargetPath)
         
         ffmpeg_extract_subclip(videoInput_path, start_time, end_time, targetname=TrimmedVideo_TargetPath+file_name)
+        print("exit")
 
 def copy_split(split_json, split_name="train"):
     split_classes = []
@@ -79,6 +80,7 @@ def copy_split(split_json, split_name="train"):
                 os.mkdir(target_dir)
             if not os.path.exists(target_path):
                 split_classes.append(t["clean_text"])
+                print(t["clean_text"])
                 shutil.copy(file_path, target_path)
         else:
             split_misses.append((file_name, url))
@@ -159,12 +161,7 @@ def convert_to_frames(Inputdata_path,word_count,input_type):
     
 if __name__ == '__main__':
 
-    JSON_PATH = '/CMSIThesis/ASL-to-English-text-research/data'
+    JSON_PATH = '/Volumes/Extreme SSD/CMSI_Thesis/Real-time-ASL-to-English-text-translation/data'
     VIDEOS_PATH = '/data/videos'
-    #TrimmedVideos_PATH = '/home/ubuntu/data/videos/TrimmedVideos'
 
     TrimVideoClip(VIDEOS_PATH)
-    # split_data(TrimmedVideos_PATH,JSON_PATH)
-
-    # convert_to_frames("MSData/",10,"train")
-    # convert_to_frames("MSData/",10,"test")
