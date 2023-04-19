@@ -6,10 +6,12 @@ import tensorflow as tf
 import os
 import time
 import json
-from tensorflow.keras import Model
-#from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
-from keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.utils import img_to_array
+import os
+import glob
+import keras
+from keras_video import VideoFrameGenerator
+#from keras.preprocessing.image import ImageDataGenerator
+#from keras.preprocessing.image import ImageDataGenerator
 
 
 train_glob_pattern = '/data/videos/crop/train/{classname}/*.mp4'
@@ -45,9 +47,9 @@ def run_i3d_pretrained():
                'they', 'baseball', 'wrong', 'son', 'salt', 'wow', 'motorcycle', 'curtains', 'seven', 'skiing',
                'dark', 'screwdriver', 'disappear', 'flat tire', 'police', 'famous', 'equal', 'apply', 'thank you',
                'girlfriend']
-    train_datagen = ImageDataGenerator(width_shift_range=0.2,height_shift_range=0.2)
-    #train = keras_video.VideoFrameGenerator(classes=classes, nb_frames=64, batch_size=10, use_headers=False, transformation=train_datagen, glob_pattern=train_glob_pattern)
-    #val = keras_video.VideoFrameGenerator(classes=classes, nb_frames=64, batch_size=10, use_headers=False,  glob_pattern=val_glob_pattern)
+    train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(width_shift_range=0.2,height_shift_range=0.2)
+    train = VideoFrameGenerator(classes=classes, nb_frames=64, batch_size=10, use_headers=False, transformation=train_datagen, glob_pattern=train_glob_pattern)
+    val = VideoFrameGenerator(classes=classes, nb_frames=64, batch_size=10, use_headers=False,  glob_pattern=val_glob_pattern)
     m_rgb = PreTrainedInception3d(include_top=False, pretrained_weights="rgb_imagenet_and_kinetics", dropout_prob=0.5,
                                   input_shape=(64, 224, 224, 3), classes=100)
 
