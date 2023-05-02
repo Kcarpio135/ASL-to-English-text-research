@@ -3,5 +3,7 @@
 tensorflow
 keras
 opencv-python
-numpy
+numpy==1.21
 keras-video-generators
+youtube-dl
+yt-dlp

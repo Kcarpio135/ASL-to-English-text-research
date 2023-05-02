@@ -18,14 +18,10 @@ for i in range(len(parsed_json)):
     name = parsed_json[i]['url'].split("=")[1]
     print(name)
     print(parsed_json[i]['url'])
-    # count +=1
     try:
         print("Downloading starts...\n")
         os.system('yt-dlp -P data/videos -o "%(id)s.%(ext)s" URL ' + url + ' --recode-video mp4')
-        #os.system('yt-dlp -o %(title)s-%(id)s.%(ext)s -P data/videos URL ' + url)
         print("Download completed..!!\n")
-        # if count == 10:
-        #     exit()
     except Exception as e:
         print(e)
 

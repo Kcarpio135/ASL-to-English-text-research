@@ -22,9 +22,11 @@ def get_classes(count=100):
         val_cls_sz.append(sum(os.path.getsize(val_path + '/' + cl + '/' + f) for f in os.listdir(val_path + '/' + cl)))
     # Sort by each class folder size
     train_dict = {k: v for k, v in sorted(dict(zip(train_classes, train_cls_sz)).items(), key=lambda item: item[1])}
+    print(train_dict)
     test_dict = {k: v for k, v in sorted(dict(zip(test_classes, test_cls_sz)).items(), key=lambda item: item[1])}
+    print(test_dict) # why is there nothing on test?
     val_dict = {k: v for k, v in sorted(dict(zip(val_classes, val_cls_sz)).items(), key=lambda item: item[1])}
-
+    print(val_dict)
     train_classes = list(train_dict.keys())
     test_classes = list(test_dict.keys())
     val_classes = list(val_dict.keys())

@@ -77,6 +77,7 @@ def copy_split(split_json, split_name="train"):
             if not os.path.exists(target_path):
                 split_classes.append(t["clean_text"])
                 shutil.move(TrimmedVideo_TargetPath, target_path)
+                print("crop video: ", target_path )
                 crop_video_file(target_path, bbox)
         else:
             split_misses.append((file_name, url))

@@ -1,15 +1,17 @@
 from pretrained_i3d import PreTrainedInception3d, layers_freeze, add_top_layer
 # from i3d import Inception3D
 import tensorflow as tf
-import keras_video
-import keras_video.utils
+# import keras_video
+#import keras_video.utils
 import os
 import time
 import json
-from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+#import keras_video
+#from keras_video import VideoFrameGenerator
+from keras.preprocessing.image import ImageDataGenerator
 
-train_glob_pattern = '/data/videos/crop/train/{classname}/*.mp4'
-val_glob_pattern = '/data/videos/crop/val/{classname}/*.mp4'
+train_glob_pattern = '/data/videos/train/{classname}/*.mp4'
+val_glob_pattern = '/data/videos/val/{classname}/*.mp4'
 
 
 # def check_i3d():
@@ -31,6 +33,8 @@ def model_checkpoints():
     return [cpTopLast, cpTopBest, cbTensorBoard]
 
 
+print("hello line 36")
+
 def run_i3d_pretrained():
     EPOCHS = 50
     with open("data/msasl/MSASL_classes.json") as f:
@@ -51,24 +55,24 @@ def run_i3d_pretrained():
               'rain', 'red', 'street', 'ski', 'snow', 'spring', 'summer', 'television', 'thanksgiving', 'their', 'vacation', 'visit', 'watch', 'weather', 'white',
               'winter', 'year', 'love it', 'money', 'shirt', 'curly hair', 'motorcycle', 'japan', 'same', 'cat', 'dance', 'turkey']   
     train_datagen = ImageDataGenerator(width_shift_range=0.2,height_shift_range=0.2)
-    train = keras_video.VideoFrameGenerator(classes=classes, nb_frames=12, batch_size=5, transformation=train_datagen, glob_pattern=train_glob_pattern)
-    val = keras_video.VideoFrameGenerator(classes=classes, nb_frames=12, batch_size=5, glob_pattern=val_glob_pattern)
+    #train = keras_video.VideoFrameGenerator(classes=classes, nb_frames=12, batch_size=5, transformation=train_datagen, glob_pattern=train_glob_pattern)
+    #val = keras_video.VideoFrameGenerator(classes=classes, nb_frames=12, batch_size=5, glob_pattern=val_glob_pattern)
     m_rgb = PreTrainedInception3d(include_top=False, pretrained_weights="rgb_imagenet_and_kinetics", dropout_prob=0.5,
                                   input_shape=(12, 224, 224, 3), classes=200)
 
     m_rgb = layers_freeze(m_rgb)
     print("Freezing layers done")
     m_rgb = add_top_layer(m_rgb, classes=200, dropout_prob=0.5)
-    optimizer = tf.keras.optimizers.Adam(lr=0.0001, decay=1e-6)
+    optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=0.0001, decay=1e-6)
     m_rgb.compile(optimizer, 'categorical_crossentropy', metrics=['accuracy'])
-    model_ckpts = model_checkpoints()
-    m_rgb.fit_generator(
-        train,
-        validation_data=val,
-        verbose=1,
-        epochs=EPOCHS,
-        callbacks=model_ckpts
-    )
+    # model_ckpts = model_checkpoints()
+    # m_rgb.fit_generator(
+    #     train,
+    #     validation_data=val,
+    #     verbose=1,
+    #     epochs=EPOCHS,
+    #     callbacks=model_ckpts
+    # )
 
 if __name__ == "__main__":
     run_i3d_pretrained()

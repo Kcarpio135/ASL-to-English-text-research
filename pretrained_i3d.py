@@ -286,6 +286,8 @@ def PreTrainedInception3d(include_top=True,
     # load weights
     model.load_weights(WEIGHTS[pretrained_weights])
 
+    #returns summary of models layers
+    model.summary()
     return model
 
 

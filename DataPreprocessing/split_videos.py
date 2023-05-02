@@ -1,3 +1,4 @@
+#Supposed to split data between train, val, and test
 import json
 import os
 import shutil
@@ -5,11 +6,12 @@ import shutil
 VIDEOS_PATH = 'data/videos'
 JSON_PATH = 'data/msasl'
 
-def copy_split(split_json, split_name="train"):
+def copy_split(split_json, split_name):
     split_classes = []
     split_misses = []
     if not os.path.exists(VIDEOS_PATH + "/" + split_name):
         os.mkdir(VIDEOS_PATH + "/" + split_name)
+        print()
     for t in split_json:
         url = t["url"]
         file_name = url[url.index("v=")+2:len(url)] + ".mp4"
@@ -24,6 +26,7 @@ def copy_split(split_json, split_name="train"):
                 #added print for check
                 print(t["clean_text"])
                 shutil.copy(file_path, target_path)
+                print("crop video: ", target_path )
                 print("Copied")
         else:
             split_misses.append((file_name, url))
@@ -46,8 +49,11 @@ def split_data():
         val_json = json.load(f)
 
     train_classes, train_misses = copy_split(train_json, "train")
+    print("train split done")
     val_classes, val_misses = copy_split(val_json, "val")
+    print("val split done")
     test_classes, test_misses = copy_split(test_json, "test")
+    print("test split done")
 
 
 if __name__ == "__main__":

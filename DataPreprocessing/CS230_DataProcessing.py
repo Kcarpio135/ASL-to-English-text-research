@@ -1,5 +1,6 @@
 import sys 
-# import cv2
+
+import cv2
 import os
 import pickle
 from os.path import join, exists
@@ -125,7 +126,7 @@ def convert_to_frames(Inputdata_path,word_count,input_type):
     frame_count = 0
     Inputdata_path = os.path.join(os.getcwd(), Inputdata_path, input_type)
     os.chdir(Inputdata_path)
-   # print("Inputdata_path: ",Inputdata_path)
+    print("Inputdata_path: ",Inputdata_path)
     
     # Get all files with raw data for words, only keep how many you want
     gesture_list = os.listdir(os.getcwd())
@@ -134,20 +135,20 @@ def convert_to_frames(Inputdata_path,word_count,input_type):
     for gesture in gesture_list:
         gesture_path = os.path.join(Inputdata_path, gesture)
         os.chdir(gesture_path)
-        #print("gesture_path: ",gesture_path)
+        print("gesture_path: ",gesture_path)
         
         # Create directory to store images
         frames = os.path.join(image_data, gesture)
         if(not os.path.exists(frames)):
             os.makedirs(frames)
-        #print("frames", frames)
+        print("frames", frames)
         
-        videos = mylistdir(os.getcwd())
+        videos = os.listdir(os.getcwd())
         videos = [video for video in videos if(os.path.isfile(os.getcwd() + '/' +  video))]
 
         for video in videos:
             video_name = video[:-4] #removing .mp4 from the video name
-            #print("video_name: ", video_name)
+            print("video_name: ", video_name)
             vidcap = cv2.VideoCapture(video)
             success,image = vidcap.read()
             frame_count = 0
@@ -162,6 +163,13 @@ def convert_to_frames(Inputdata_path,word_count,input_type):
 if __name__ == '__main__':
 
     JSON_PATH = '/Volumes/Extreme SSD/CMSI_Thesis/Real-time-ASL-to-English-text-translation/data'
+    # JSON_PATH = '/Users/kevincarpio/CMSIThesis/Real-time-ASL-to-English-text-translation/data'
     VIDEOS_PATH = '/data/videos'
+    TrimmedVideos_PATH = '/data/videos/TrimmedVideos'
 
     TrimVideoClip(VIDEOS_PATH)
+    #split_data(TrimmedVideos_PATH,JSON_PATH)
+
+    convert_to_frames("data/videos/",10,"train")
+    #cannot run because no test videos?
+    #convert_to_frames("data/videos/",10,"test")
