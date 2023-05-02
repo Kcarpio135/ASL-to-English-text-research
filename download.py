@@ -1,8 +1,8 @@
+#Downloads videos from the web to be used as data
 import json
 import urllib.request
 #import youtube_dl
 import os
-#pip install youtube-dl and the upgragde 
 
 JSON_PATH = '/Real-time-ASL-to-English-text-translation/data/msasl/MSASL_val.json'
 Video_path = '/data/videos'
@@ -28,3 +28,4 @@ for i in range(len(parsed_json)):
 
 download_yt_vids("MSASL_val.json")
 print("done")
+
