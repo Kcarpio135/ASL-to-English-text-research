@@ -18,6 +18,9 @@ Split Videos:
 Keras Error in Train:
 'python3 msasl_i3d_train_100.py'
 
+Hand demo:
+'python3 /hands/handReaderDemo.py'
+
 Evaluate model:
 
 'python3 pretrained_i3d.py'
